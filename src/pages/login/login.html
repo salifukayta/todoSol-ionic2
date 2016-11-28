@@ -1,0 +1,44 @@
+<ion-content>
+  <ion-list>
+    <h2 padding-vertical="25px" text-center="true" no-lines>
+      Welcom to Sol Todo App
+    </h2>
+
+    <ion-item>
+      <ion-label floating>email</ion-label>
+      <ion-input type="text" [(ngModel)]="userDetails.email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" [(ngModel)]="userDetails.password"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="!isLogin">
+      <ion-label floating>Confirm Password</ion-label>
+      <ion-input type="password"></ion-input>
+    </ion-item>
+
+    <ion-item no-lines *ngIf="isLogin">
+      <button ion-button block (tap)="login()">Login</button>
+    </ion-item>
+
+    <ion-item no-lines *ngIf="isLogin">
+      <button ion-button block (tap)="loginFacebook()">Login with FaceBook</button>
+    </ion-item>
+
+    <ion-item no-lines *ngIf="isLogin">
+      <button ion-button block color="secondary" clear (tap)="resetPasswork()">Forgot password</button>
+    </ion-item>
+
+    <ion-item no-lines>
+      <button ion-button block color="dark" *ngIf="isLogin" outline (tap)="signUp()">SignUp</button>
+      <button ion-button block *ngIf="!isLogin" (tap)="signUp()">SignUp</button>
+    </ion-item>
+
+    <ion-item no-lines *ngIf="!isLogin">
+      <button ion-button block color="dark" outline (tap)="login()">Back to Login</button>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

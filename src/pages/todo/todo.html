@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Todo List</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list padding-top="40px">
+    <ion-item *ngFor="let task of tasks" (click)="checkTask(task)">
+      <ion-label>{{task.title}}</ion-label>
+      <ion-checkbox [(ngModel)]="task.isDone"></ion-checkbox>
+      <h2></h2>
+    </ion-item>
+  </ion-list>
+
+  <ion-item no-lines>
+    <button ion-button block color="danger" (tap)="saveChanges()">Save changes</button>
+  </ion-item>
+
+</ion-content>
