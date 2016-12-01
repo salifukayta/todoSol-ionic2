@@ -6,6 +6,10 @@ import { Page2 } from '../pages/page2/page2';
 import { TodoPage } from '../pages/todo/todo';
 import { CloudModule, CloudSettings } from '@ionic/cloud-angular';
 import { LoginPage } from '../pages/login/login';
+import { FirebaseService } from '../pages/login/firebase.service';
+import { CloudIonicService } from '../pages/login/cloud-ionic.service';
+import { TaskFirebaseService } from '../pages/todo/task-firebase.service';
+import { TaskPage } from '../pages/task/add-task';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -23,6 +27,7 @@ const cloudSettings: CloudSettings = {
     MyApp,
     LoginPage,
     TodoPage,
+    TaskPage,
     Page1,
     Page2
   ],
@@ -35,9 +40,11 @@ const cloudSettings: CloudSettings = {
     MyApp,
     LoginPage,
     TodoPage,
+    TaskPage,
     Page1,
     Page2
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [TaskFirebaseService, CloudIonicService, FirebaseService,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

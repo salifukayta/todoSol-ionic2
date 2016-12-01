@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { User, UserDetails, Auth, IDetailedError, FacebookAuth } from '@ionic/cloud-angular';
+import { IDetailedError } from '@ionic/cloud-angular';
 import { NavController, MenuController } from 'ionic-angular';
 import { TodoPage } from '../todo/todo';
+import { CloudIonicService } from './cloud-ionic.service';
+import { UserModel } from './UserModel';
+import { FirebaseService } from './firebase.service';
 
 @Component({
   selector: 'page-login',
@@ -9,12 +12,12 @@ import { TodoPage } from '../todo/todo';
 })
 export class LoginPage {
 
-  userDetails: UserDetails;
+  userModel: UserModel;
   isLogin = true;
 
-  constructor(private auth: Auth, private facebookAuth: FacebookAuth, private user: User,
-              private nav: NavController, private menu: MenuController) {
-    this.userDetails = new Object();
+  //CloudIonicService
+  constructor(private loginService: FirebaseService, private nav: NavController, private menu: MenuController) {
+    this.userModel = new UserModel();
     this.menu.enable(false);
   }
 
@@ -22,7 +25,7 @@ export class LoginPage {
     if (!this.isLogin) {
       this.isLogin = true;
     } else {
-      this.auth.login('basic', this.userDetails, {'remember': false}).then(() => {
+      this.loginService.emailLogin(this.userModel).then((data) => {
         this.menu.enable(true);
         this.nav.setRoot(TodoPage);
       }, (err) => {
@@ -32,10 +35,9 @@ export class LoginPage {
     }
   }
 
-  //TODO to be continued => do not work ? somthing is missing
+  //TODO to be testes
   loginFacebook() {
-    this.facebookAuth.login().then(() => {
-      alert('success login facebook');
+    this.loginService.facebookLogin().then((data) => {
       this.menu.enable(true);
       this.nav.setRoot(TodoPage);
     }, (err) => {
@@ -48,26 +50,35 @@ export class LoginPage {
     if (this.isLogin) {
       this.isLogin = false;
     } else {
-      this.auth.signup(this.userDetails).then(() => {
+      this.loginService.signup(this.userModel).then(() => {
         // `this.user` is now registered
         this.isLogin = true;
         this.login();
-      }, (err: IDetailedError<string[]>) => {
-        for (let e of err.details) {
-          if (e === 'conflict_email') {
-            alert('Email already exists.');
-          } else {
-            // handle other errors
-            alert(err);
-          }
+      }, (err: any) => {
+        // err: IDetailedError<string[]>
+        console.error(err);
+        if (err.code === 'auth/email-already-in-use') {
+          alert('Email already exists.');
         }
+        //for (let e of err.details) {
+        //  if (e === 'conflict_email') {
+        //    alert('Email already exists.');
+        //  } else {
+        //    // handle other errors
+        //    alert(err);
+        //  }
+        //}
       });
     }
   }
 
   resetPasswork() {
-    this.userDetails.password = this.auth.passwordResetUrl;
     //TODO to be continued => do a get request ?
+    this.loginService.resetPassword(this.userModel).subscribe(() => {
+      console.log('reset success');
+    }, (err) => {
+      console.log('reset error');
+    });
   }
 
 }

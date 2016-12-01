@@ -6,17 +6,17 @@
 
     <ion-item>
       <ion-label floating>email</ion-label>
-      <ion-input type="text" [(ngModel)]="userDetails.email"></ion-input>
+      <ion-input type="text" [(ngModel)]="userModel.email"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Password</ion-label>
-      <ion-input type="password" [(ngModel)]="userDetails.password"></ion-input>
+      <ion-input type="password" [(ngModel)]="userModel.password"></ion-input>
     </ion-item>
 
     <ion-item *ngIf="!isLogin">
       <ion-label floating>Confirm Password</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input type="password"  [(ngModel)]="userModel.confirmPassword"></ion-input>
     </ion-item>
 
     <ion-item no-lines *ngIf="isLogin">

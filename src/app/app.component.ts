@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
+import * as firebase from "firebase";
 
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
@@ -32,6 +33,16 @@ export class MyApp {
   }
 
   initializeApp() {
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBDTVzNTocX7b2V1iq9oBKTcKX2VykOOTs",
+      authDomain: "soltodo-2966a.firebaseapp.com",
+      databaseURL: "https://soltodo-2966a.firebaseio.com",
+      storageBucket: "soltodo-2966a.appspot.com",
+      messagingSenderId: "670219445506"
+    };
+    firebase.initializeApp(config);
+
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

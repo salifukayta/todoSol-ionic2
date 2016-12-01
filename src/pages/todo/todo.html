@@ -1,10 +1,15 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+  <ion-toolbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
     <ion-title>Todo List</ion-title>
-  </ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (tap)="showAddTask()">
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -16,8 +21,12 @@
     </ion-item>
   </ion-list>
 
+  <ion-item *ngIf="tasks.length === 0">
+    No Task Added Yet
+  </ion-item>
+
   <ion-item no-lines>
-    <button ion-button block color="danger" (tap)="saveChanges()">Save changes</button>
+    <button ion-button block color="danger" (click)="saveChanges()">Save changes</button>
   </ion-item>
 
 </ion-content>
